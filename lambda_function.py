@@ -12,21 +12,6 @@ def lambda_handler(event, context):
     }
 
     hdrs = {'Content-Type': 'application/json'}
-    
-    try: 
-        req = urllib.request.Request(url, headers = headers)
-        response = urllib.request.urlopen(req)
-    #if there is an error
-    except urllib.error.HTTPError as e:
-        # Return code error (e.g. 404, 501, ...)
-        print('HTTPError: {}'.format(e.code))
-    else:
-        #iterate over the results
-        data =  response.read()
-        res = json.loads(data)
-        for item in reversed(res):
-          post_to_slack(item["link"], item["title"], item["img"])  
-
 
     def post_to_slack (link, title, img): 
         response_body = {
@@ -63,5 +48,21 @@ def lambda_handler(event, context):
         resp = urllib.request.urlopen(req)
         response = resp.read()
         print (response)
+        
+        
+    try: 
+        req = urllib.request.Request(url, headers = headers)
+        response = urllib.request.urlopen(req)
+    #if there is an error
+    except urllib.error.HTTPError as e:
+        # Return code error (e.g. 404, 501, ...)
+        print('HTTPError: {}'.format(e.code))
+    else:
+        #iterate over the results
+        data =  response.read()
+        res = json.loads(data)
+        for item in reversed(res):
+         post_to_slack(item["link"], item["title"], item["img"])  
+
     
     
