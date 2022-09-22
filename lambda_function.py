@@ -1,10 +1,12 @@
 import json
 import urllib.request
-import boto3
 import os
+import boto3
 
 def lambda_handler(event, context):
-    
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(os.environ['TABLE_NAME'])
+
     url = os.environ['TECH_FEED']
     headers = {
             "X-RapidAPI-Key": os.environ['RAPIDAPI_KEY'],
@@ -12,6 +14,22 @@ def lambda_handler(event, context):
     }
 
     hdrs = {'Content-Type': 'application/json'}
+
+    def send_to_database (link, title, img, dateTime):
+        try: 
+            response = table.put_item(
+                Item = {
+                    'tech_news_id': dateTime.replace(" ", "") + "-" + title.replace(" ", ""),
+                    'url': url,
+                    'title': title
+                },
+                ConditionExpression='attribute_not_exists(tech_news_id)'
+            )
+            post_to_slack (link, title, img)
+        except Exception as inst:
+            print(inst)
+            response = None
+        return response
 
     def post_to_slack (link, title, img): 
         response_body = {
@@ -62,7 +80,5 @@ def lambda_handler(event, context):
         data =  response.read()
         res = json.loads(data)
         for item in reversed(res):
-         post_to_slack(item["link"], item["title"], item["img"])  
+            send_to_database(item["link"], item["title"], item["img"], item["dateTime"])  
 
-    
-    
