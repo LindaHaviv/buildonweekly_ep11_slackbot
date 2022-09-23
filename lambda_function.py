@@ -15,6 +15,7 @@ def lambda_handler(event, context):
 
     hdrs = {'Content-Type': 'application/json'}
 
+    #function handles checking if database has the articles. If no, send to database & slack by calling post_to_slack function
     def send_to_database (link, title, img, dateTime):
         try: 
             response = table.put_item(
@@ -31,6 +32,7 @@ def lambda_handler(event, context):
             response = None
         return response
 
+    #function handles posting to slack
     def post_to_slack (link, title, img): 
         response_body = {
             "blocks": [
