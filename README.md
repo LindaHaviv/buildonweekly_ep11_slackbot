@@ -23,7 +23,7 @@ Building a [slack app](https://slack.com/apps) that shares Tech News articles wh
 * Test posting "Hello World" to the webhook endpoint (verify by seeing hellow world appear in slack channel)
 
 ### Step 4: Find a Tech News Feed
-* For this demo we will use a [Tech News feed] (https://rapidapi.com/athulsprakash-CxC2uBLxvsG/api/tech-news3/) from [Rapid API](https://rapidapi.com/hub ) — API Marketplace
+* For this demo we will use a [Tech News feed](https://rapidapi.com/athulsprakash-CxC2uBLxvsG/api/tech-news3/) from [Rapid API](https://rapidapi.com/hub ) — API Marketplace
 * Generate RapidAPI keys
 * Add the keys as environment variables in your lambda code
 
@@ -34,7 +34,7 @@ Building a [slack app](https://slack.com/apps) that shares Tech News articles wh
 ### Step 6: Let’s send a sample story to slack
 * Test sending one story from the API feed to slack with raw schema
 
-### Step 7: Let’s format a sample data feed object using the slack [Block Kit Builder] (https://api.slack.com/block-kit )
+### Step 7: Let’s format a sample data feed object using the slack [Block Kit Builder](https://api.slack.com/block-kit )
 * Add the slack style formatted response template to your Lambda code (we called it response_body) & invoke to view sample output in slack
 
 ### Step 8: Create function to Loop through the data 
